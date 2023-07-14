@@ -1,1 +1,1 @@
-# testrgb
+# RGB
