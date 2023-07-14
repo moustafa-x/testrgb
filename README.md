@@ -121,6 +121,7 @@ Les 2 commandes utiles sont alors:
 pour générer l'exécutable (format.elf), et:
 
 ```sh
+export AVRDUDE_PORT="/dev/ttyACM0"
 sudo ./make.py flash
 ```
 
