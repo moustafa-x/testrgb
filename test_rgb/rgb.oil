@@ -1,0 +1,86 @@
+/* Running the following example:
+ * just call goil a first time using the command line:
+ * goil --target=avr/arduino/uno --templates=../../../../goil/templates/ blink.oil
+ * you may have to update ARDUINO section (l.13) for your configuration.
+ *
+ */
+
+OIL_VERSION = "2.5" : "test" ;
+
+CPU test {    
+  OS config {
+    STATUS = STANDARD;
+    BUILD = TRUE {
+      TRAMPOLINE_BASE_PATH = "../../../..";
+      APP_NAME = "trampuinoBlink";
+      APP_SRC = "rgb.cpp";
+      CPPCOMPILER = "avr-g++";
+      COMPILER = "avr-gcc";
+      LINKER = "avr-gcc";
+      ASSEMBLER = "avr-gcc";
+      COPIER = "avr-objcopy";
+      SYSTEM = PYTHON;
+    };
+    SYSTEM_CALL = TRUE;
+  };
+
+  APPMODE stdAppmode {};
+  
+  ALARM period {
+    COUNTER= SystemCounter;
+    ACTION = ACTIVATETASK {
+      TASK = lectureCapteurTask;
+    };
+    AUTOSTART = TRUE {
+      ALARMTIME = 1024; //activated each 1024 ms
+      CYCLETIME = 1024; //activated each 1024 ms
+      APPMODE = stdAppmode;
+    };
+  };
+
+  TASK lectureCapteurTask {
+    PRIORITY = 2;
+    AUTOSTART = FALSE;
+    ACTIVATION = 1;
+    SCHEDULE = FULL;
+    STACKSIZE = 256;
+  };
+ ALARM periodicAl1 {
+    COUNTER= SystemCounter;
+    ACTION = ACTIVATETASK {
+      TASK = leTask;
+    };
+    AUTOSTART = TRUE {
+      ALARMTIME = 1024; //activated each 1024 ms
+      CYCLETIME = 1024; //activated each 1024 ms
+      APPMODE = stdAppmode;
+    };
+  };
+
+
+  TASK  leTask {
+    PRIORITY = 5;
+    AUTOSTART = FALSE;
+    ACTIVATION = 1;
+    SCHEDULE = FULL;
+    STACKSIZE = 256;
+  };
+  ALARM Al1 {
+    COUNTER= SystemCounter;
+    ACTION = ACTIVATETASK {
+      TASK = green;
+    };
+    AUTOSTART = TRUE {
+      ALARMTIME = 1024; //activated each 1024 ms
+      CYCLETIME = 1024; //activated each 1024 ms
+      APPMODE = stdAppmode;
+    };
+  };
+   TASK  green {
+    PRIORITY = 4;
+    AUTOSTART = FALSE;
+    ACTIVATION = 1;
+    SCHEDULE = FULL;
+    STACKSIZE = 256;
+  };
+};

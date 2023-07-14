@@ -1,0 +1,28 @@
+Le code OIL (OSEK Implementation Language) fourni est une description de configuration pour un système embarqué qui utilise le système d'exploitation temps réel OSEK/VDX. Le système cible est une carte Arduino Uno utilisant un processeur AVR. Voici une explication détaillée du code OIL fourni:
+
+    La première ligne définit la version de OIL utilisée.
+    La ligne suivante définit le CPU utilisé comme étant nommé "test".
+    Le bloc "OS config" décrit la configuration générale du système d'exploitation temps réel OSEK/VDX.
+        "STATUS = STANDARD" indique que le système est configuré selon le standard OSEK/VDX.
+        "BUILD = TRUE" indique que le système doit être compilé.
+            "TRAMPOLINE_BASE_PATH" indique le chemin vers les fichiers de démarrage pour la plateforme cible.
+            "APP_NAME" est le nom de l'application qui sera générée.
+            "APP_SRC" est le nom du fichier source qui sera utilisé pour générer l'application.
+            "CPPCOMPILER", "COMPILER", "LINKER", "ASSEMBLER" et "COPIER" sont les noms des outils de compilation et de construction utilisés pour générer l'application.
+            "SYSTEM = PYTHON" indique que le système utilise Python comme système d'exploitation.
+        "SYSTEM_CALL = TRUE" indique que les appels système sont activés.
+    Le bloc "APPMODE stdAppmode {}" définit un mode d'application nommé "stdAppmode".
+    Le bloc "ALARM periodicAl {}" définit une alarme nommée "periodicAl".
+        "COUNTER= SystemCounter" indique que la valeur du compteur "SystemCounter" est utilisée pour déclencher l'alarme.
+        "ACTION = ACTIVATETASK" indique que l'action effectuée lorsque l'alarme se déclenche est d'activer une tâche.
+            "TASK = lectureCapteurTask" indique que la tâche "lectureCapteurTask" doit être activée.
+        "AUTOSTART = TRUE" indique que l'alarme doit être automatiquement démarrée.
+            "ALARMTIME = 1000" indique que l'alarme doit se déclencher toutes les 1000 unités de temps.
+            "CYCLETIME = 1000" indique que l'alarme doit se répéter toutes les 1000 unités de temps.
+            "APPMODE = stdAppmode" indique que l'alarme est active uniquement lorsque le mode d'application "stdAppmode" est actif.
+    Le bloc "TASK lectureCapteurTask {}" définit une tâche nommée "lectureCapteurTask".
+        "PRIORITY = 20" indique la priorité de la tâche.
+        "AUTOSTART = FALSE" indique que la tâche ne doit pas être automatiquement démarrée.
+        "ACTIVATION = 1" indique que la tâche peut être activée une seule fois.
+        "SCHEDULE = FULL" indique que la tâche utilise un ordonnancement en temps réel.
+        "STACKSIZE = 256" indique la taille de la pile allouée à la tâche.
